@@ -75,7 +75,8 @@ To reactivate it type `conda activate commonRecEnv` (or whatever name you chose)
 If unsure of the name you gave you can find it back with: `conda info --envs`
 
 If you plan on using the notebook files (`.ipynb` extension) you'll also need the following:
-``` bash 
+
+``` bash
 conda install -y nodejs
 conda install -y -c conda-forge jupyterlab ipympl widgetsnbextension
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
@@ -86,7 +87,7 @@ Start jupyterlab from the project folder with `jupyter lab` (make sure you activ
 
 ## Reconstruction procedure
 
-Note: SDHCAL people use `trigger` while ecal people use `spill` to describe a full acquisition. Whenever these terms are mentioned assume they are interchangeable. 
+Note: SDHCAL people use `trigger` while ecal people use `spill` to describe a full acquisition. Whenever these terms are mentioned assume they are interchangeable.
 
 Steps to find common event:
 
@@ -94,7 +95,7 @@ Steps to find common event:
    * Open time reconstructed data from both calorimeters (accessible to member of the common testbeam e-group)
      * ecal : `/eos/project/s/siw-ecal/TB2018-09/Common/ECAL/{Particle}_{Energy}GeV/{run_number}__build.root`
      * sdhcal : `/eos/user/a/apingaul/CALICE/Data/SPS_09_2018/Trivent/DHCAL_Trivent_Ecal_{run_number}.root`
-   * Iterate through each set of data 1 trigger/spill at a time 
+   * Iterate through each set of data 1 trigger/spill at a time
      * For each sdhcal event associate all ecal events from this trigger (or vice versa)
      * Compute the time difference between each pair of event in 5MHz clock ($\Delta_{bcid} = ecal_{bcid} - sdhcal_{EvtRevBcid}$)
 
@@ -110,7 +111,6 @@ Steps to find common event:
 5. Event display example after following the previous steps:
 ![70GeV pion interacting in both detectors](Figs/Event_display_744318_trig1586_ecal66693_sdhcal36929.png)
 ![Beam muons with high incoming angle](Figs/Event_display_744318_trig1671_ecal70168_sdhcal39003.png)
-
 
 ## Ecal bcid correction
 
@@ -131,17 +131,17 @@ For any executable in case of doubt how to use it type `python -m script --help`
 use `make_common_event_tree.py` with the following options:
 
 * Required options:
-  * `--run_list` (`-r`): List of run_number to merge, space separated 
+  * `--run_list` (`-r`): List of run_number to merge, space separated
   * `--hcal_file_format` (`-f`): Path to hcal file with `run number` replaced by `{run_number}`
-  * `--ecal_file_format` (`-e`): Path to ecal file with `run number` replaced by `{run_number}` 
-  * `--output_file_format`(`-o`): Path to output file with `run number` replaced by `{run_number}` 
+  * `--ecal_file_format` (`-e`): Path to ecal file with `run number` replaced by `{run_number}`
+  * `--output_file_format`(`-o`): Path to output file with `run number` replaced by `{run_number}`
 * Optional:
   * `--ecal_tree_name`: Name of the tree to retrieve in the ecal file, default to `ecal`
   * `--hcal_tree_name`: Name of the tree to retrieve in the hcal file, default to `sdhcal`
   * `--output_tree_name`: Name of the tree to save in the output file, default to `common`
   * `--triggers` (`-n`): Amount of trigger/spill to analyse. If set the output file with be appended with `{n}triggers`
   * `--select_muons`: Apply a simple cut to select mostly muons in the sdhcal, default to `False`
-  * `--ecal_slab_cut`: Cut on the min numbers of ecal slab with a hit, default to `3` 
+  * `--ecal_slab_cut`: Cut on the min numbers of ecal slab with a hit, default to `3`
   * `--use_xroot`: Wheter to look for the files locally or over the network to a xroot enabled folder, default to `False`. You need a valid kerberos ticket and read access to the remote folder. You will face the following error otherwise: `OSError: [ERROR] Server responded with an error: [3010] Unable to give access - user access restricted - unauthorized identity used Permission denied`
   * `--xroot_url`: Base url to use if using xroot, default to `root://eosuser.cern.ch/` (cern eos space)
 
@@ -171,16 +171,16 @@ The name of the tree is prepended to each branch in the common tree (e.g. `spill
 Run `correct_ecal_bcid.py` with the following options:
 
 * Required options:
-  * `--run_list` (`-r`): List of run_number to merge, space separated 
+  * `--run_list` (`-r`): List of run_number to merge, space separated
   * `--common_file_format` (`-f`): Path to common file with `run number` replaced by `{run_number}` (file produced by `make_common_event_tree.py`)
-  * `--output_file_format`(`-o`): Path to output file with `run number` replaced by `{run_number}` 
+  * `--output_file_format`(`-o`): Path to output file with `run number` replaced by `{run_number}`
 * Optional:
   * `--clock_cut`: Correction to apply to ecal bcid, in 5MHz clock. Every time the sdhcal_bcid goes over a multiple of this value, will add this value to the ecal bcid, default to `8192`
   * `--triggers` (`-n`): Amount of trigger/spill to analyse. If set the output file with be appended with `{n}triggers`
   * `--common_tree_name`: Name of the tree to retrieve in the common file, default to `common`
   * `--output_tree_name`: Name of the tree to save in the output file, default to `common`
   * `--use_xroot`: Wheter to look for the files locally or over the network to a xroot enabled folder, default to `False`. You need a valid kerberos ticket and read access to the remote folder. You will face the following error otherwise: `OSError: [ERROR] Server responded with an error: [3010] Unable to give access - user access restricted - unauthorized identity used Permission denied`
-* `--xroot_url`: Base url to use if using xroot, default to `root://eosuser.cern.ch/` (cern eos space)
+  * `--xroot_url`: Base url to use if using xroot, default to `root://eosuser.cern.ch/` (cern eos space)
 
 Full example:
 
@@ -197,15 +197,17 @@ Since its only correcting data from the merged trees, the same subset of branche
 ### Event display
 
 This is done interactively with the `event_display.ipynb` notebook:
-1. Activate your conda environment: `conda activate commonRecEnv` (see [setup](#with-conda-highly-recommended))
-2. Your browser should open a new tab to http://localhost:8888/lab
-3. Open the `event_display.ipynb` file from the left panel.
-4. Edit variables in the cell at step 1. 
-5. Run each cell by hitting `shift-enter` for each one of them. Or select `Run`->`Run All Cells` from the menu.
+
+1. If using swan, open `event_display.ipynb`
+   1. Else activate your conda environment: `conda activate commonRecEnv` (see [setup](#with-conda-highly-recommended)) and run `jupyter lab`
+   2. Your browser should open a new tab to <http://localhost:8888/lab>
+   3. Open the `event_display.ipynb` file from the left panel.
+2. Edit variables in the cell at step 1.
+3. Run each cell by hitting `shift-enter` for each one of them. Or select `Run`->`Run All Cells` from the menu.
 
 You should be presented with the following:
-![](Figs/Event_display_example.png)
+![Event display 70GeV Pion](Figs/Event_display_example.png)
 
 * Click on `next`/`previous` or use the slider to display different events.
-*  Use the marker size and show ecal show hcal buttons to adjust the drawing to your liking.
+* Use the marker size and show ecal show hcal buttons to adjust the drawing to your liking.
 * Click on save to save the currently displayed event to the `Figs/` folder. Naming scheme is `Event_display_{run_number}_trig{spill}_ecal{event}_sdhcal{EvtNum}.png`.
