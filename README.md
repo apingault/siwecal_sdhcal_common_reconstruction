@@ -14,7 +14,7 @@ All script were made with python3.7 but should be compatible with python2.7.
 You'll need the following dependencies:
 
 * pandas
-* numpy 
+* numpy
 * scipy
 * matplotlib
 * jupyterlab (for the notebook files)
@@ -23,7 +23,19 @@ You'll need the following dependencies:
 * uproot (to read root files and transform them to numpy/pandas format)
 * root_pandas (to write the results as root files, should no longer be needed once uproot add writing tree to root files)
 
-### With pip
+### Swan
+
+The easiest setup is to use the swan instance from cern:
+
+1. Go to <https://swan.cern.ch/> and login with your cern credentials. Create a new instance and you'll be presented with a screen similar to this: ![swan projects](Figs/swan_setup.png)
+2. Click on the download icon on the top right corner and paste the project github url, swan will automatically clone it.
+3. Click on `New Terminal` on the top banner
+4. `pip install --user uproot tqdm ipympl widgetsnbextension`
+5. You're done, you can now go to [Reconstruction procedure](#reconstruction-procedure).
+
+### Locally
+
+#### With pip
 
 This can be done with the following one-liner:
 
@@ -33,7 +45,7 @@ pip install uproot root_pandas scipy tqdm loguru matplotlib jupyterlab ipympl # 
 
 But to avoid any trouble with mismatching package version I suggest using conda instead.
 
-### With conda (Highly recommended)
+#### With conda (recommended)
 
 The whole process should take about 5min, you'll then have a fully configured environment (including latest version of root with python3 bindings if thats your thing).
 
