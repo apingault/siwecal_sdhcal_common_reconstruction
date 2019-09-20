@@ -125,6 +125,7 @@ Go to [Correcting ecal bcid](#correcting-ecal-bcid) for details.
 ## Executable info
 
 For any executable in case of doubt how to use it type `python -m script --help`.
+If using swan, open a new terminal from the top banner. The executable should be located in `~/SWAN_projects/siwecal_sdhcal_common_reconstruction/`.
 
 ### Merging the trees
 
